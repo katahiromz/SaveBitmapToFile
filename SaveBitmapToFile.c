@@ -118,7 +118,7 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
     BITMAP bm;
 
     /* verify the bitmap */
-    if (!GetObjectW(hbm, sizeof(BITMAP), &bm))
+    if (!GetObject(hbm, sizeof(BITMAP), &bm))
     {
         assert(0);
         return FALSE;
