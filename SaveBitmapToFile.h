@@ -35,7 +35,7 @@ __inline HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
 {
     HANDLE hFile;
     BITMAPFILEHEADER bf;
-    KHMZ_BITMAPINFOEX bi;
+    KHMZ_BITMAPINFOEX bmi;
     DWORD cb, cbImage;
     LPVOID pvBits1, pvBits2;
     HDC hDC;
@@ -75,7 +75,7 @@ __inline HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
         pvBits1 = HeapAlloc(GetProcessHeap(), 0, cbImage);
         if (pvBits1 != NULL)
         {
-            if (!ReadFile(hFile, &bi, bf.bfOffBits -
+            if (!ReadFile(hFile, &bmi, bf.bfOffBits -
                           sizeof(BITMAPFILEHEADER), &cb, NULL) ||
                 !ReadFile(hFile, pvBits1, cbImage, &cb, NULL))
             {
@@ -97,13 +97,13 @@ __inline HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
     }
 
     /* create the DIB object and get the handle */
-    hbm = CreateDIBSection(NULL, (BITMAPINFO*)&bi, DIB_RGB_COLORS,
+    hbm = CreateDIBSection(NULL, (BITMAPINFO*)&bmi, DIB_RGB_COLORS,
                            &pvBits2, NULL, 0);
     if (hbm)
     {
         HDC hDC = CreateCompatibleDC(NULL);
-        if (!SetDIBits(hDC, hbm, 0, abs(bi.bmiHeader.biHeight),
-                       pvBits1, (BITMAPINFO*)&bi, DIB_RGB_COLORS))
+        if (!SetDIBits(hDC, hbm, 0, abs(bmi.bmiHeader.biHeight),
+                       pvBits1, (BITMAPINFO*)&bmi, DIB_RGB_COLORS))
         {
             /* failed to get the bits */
             assert(0);
