@@ -10,6 +10,7 @@ int main(void)
 {
     static const LPCTSTR array1[] =
     {
+        TEXT("1bpp.bmp"),
         TEXT("4bpp.bmp"),
         TEXT("8bpp.bmp"),
         TEXT("24bpp.bmp"),
@@ -17,6 +18,7 @@ int main(void)
     };
     static const LPCTSTR array2[] =
     {
+        TEXT("1bpp-saved.bmp"),
         TEXT("4bpp-saved.bmp"),
         TEXT("8bpp-saved.bmp"),
         TEXT("24bpp-saved.bmp"),
