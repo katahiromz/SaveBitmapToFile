@@ -31,6 +31,7 @@ typedef struct tagKHMZ_BITMAPINFOEX
     RGBQUAD          bmiColors[256];
 } KHMZ_BITMAPINFOEX, FAR *LPKHMZ_BITMAPINFOEX;
 
+/* load a bitmap as DIB from a BMP/DIB file */
 __inline HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
 {
     HANDLE hFile;
@@ -119,6 +120,7 @@ __inline HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
     return hbm;
 }
 
+/* save the bitmap to a BMP/DIB file */
 __inline BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
 {
     BOOL fOK;
