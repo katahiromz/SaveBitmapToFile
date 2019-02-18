@@ -87,7 +87,7 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
     if (hbm)
     {
         hDC = CreateCompatibleDC(NULL);
-        if (!SetDIBits(hDC, hbm, 0, abs(bmi.bmiHeader.biHeight),
+        if (!SetDIBits(hDC, hbm, 0, (UINT)labs(bmi.bmiHeader.biHeight),
                        pvBits1, (BITMAPINFO*)&bmi, DIB_RGB_COLORS))
         {
             /* failed to get the bits */
@@ -132,7 +132,7 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
     pbmih->biPlanes           = 1;
     pbmih->biBitCount         = bm.bmBitsPixel;
     pbmih->biCompression      = BI_RGB;
-    pbmih->biSizeImage        = bm.bmWidthBytes * bm.bmHeight;
+    pbmih->biSizeImage        = (DWORD)(bm.bmWidthBytes * bm.bmHeight);
 
     /* size of color table */
     if (bm.bmBitsPixel < 16)
@@ -160,7 +160,7 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
 
     /* get the bits */
     fOK = FALSE;
-    if (GetDIBits(hDC, hbm, 0, bm.bmHeight, pBits, (BITMAPINFO *)&bmi,
+    if (GetDIBits(hDC, hbm, 0, (UINT)bm.bmHeight, pBits, (BITMAPINFO *)&bmi,
                   DIB_RGB_COLORS))
     {
         /* create the file */

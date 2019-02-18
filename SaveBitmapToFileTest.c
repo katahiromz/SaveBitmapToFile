@@ -24,11 +24,24 @@ int main(void)
         TEXT("24bpp-saved.bmp"),
         TEXT("32bpp-saved.bmp")
     };
-    size_t i, count = ARRAYSIZE(array1);
-    for (size_t i = 0; i < count; ++i)
+    static const INT array3[] =
     {
-        HBITMAP hbm = LoadBitmapFromFile(array1[i]);
+        1, 4, 8, 24, 32
+    };
+    HBITMAP hbm;
+    BITMAP bm;
+    size_t i, count;
+
+    count = ARRAYSIZE(array1);
+    for (i = 0; i < count; ++i)
+    {
+        hbm = LoadBitmapFromFile(array1[i]);
         assert(hbm != NULL);
+
+        if (!GetObject(hbm, sizeof(bm), &bm))
+            assert(0);
+
+        assert(bm.bmBitsPixel == array3[i]);
 
         if (!SaveBitmapToFile(array2[i], hbm))
             assert(0);
