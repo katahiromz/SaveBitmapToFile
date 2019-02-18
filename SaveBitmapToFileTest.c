@@ -9,6 +9,10 @@
     #include <assert.h>
 #endif
 
+#ifndef ARRAYSIZE
+    #define ARRAYSIZE(array) (sizeof(array) / sizeof((array)[0]))
+#endif
+
 int main(void)
 {
     static const LPCTSTR array1[] =
