@@ -85,7 +85,7 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
                            &pvBits2, NULL, 0);
     if (hbm)
     {
-        HDC hDC = CreateCompatibleDC(NULL);
+        hDC = CreateCompatibleDC(NULL);
         if (!SetDIBits(hDC, hbm, 0, abs(bmi.bmiHeader.biHeight),
                        pvBits1, (BITMAPINFO*)&bmi, DIB_RGB_COLORS))
         {
@@ -155,56 +155,49 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
     }
 
     /* create a DC */
-    fOK = FALSE;
     hDC = CreateCompatibleDC(NULL);
-    if (hDC)
+
+    /* get the bits */
+    fOK = FALSE;
+    if (GetDIBits(hDC, hbm, 0, bm.bmHeight, pBits, (BITMAPINFO *)&bmi,
+                  DIB_RGB_COLORS))
     {
-        /* get the bits */
-        if (GetDIBits(hDC, hbm, 0, bm.bmHeight, pBits, (BITMAPINFO *)&bmi,
-                      DIB_RGB_COLORS))
+        /* create the file */
+        hFile = CreateFile(bmp_file, GENERIC_WRITE, FILE_SHARE_READ, NULL,
+                           CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL |
+                           FILE_FLAG_WRITE_THROUGH, NULL);
+        if (hFile != INVALID_HANDLE_VALUE)
         {
-            /* create the file */
-            hFile = CreateFile(bmp_file, GENERIC_WRITE, FILE_SHARE_READ, NULL,
-                               CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL |
-                               FILE_FLAG_WRITE_THROUGH, NULL);
-            if (hFile != INVALID_HANDLE_VALUE)
-            {
-                /* write to file */
-                fOK = WriteFile(hFile, &bf, sizeof(BITMAPFILEHEADER), &cb, NULL) &&
-                      WriteFile(hFile, &bmi, sizeof(BITMAPINFOHEADER), &cb, NULL) &&
-                      WriteFile(hFile, bmi.bmiColors, cbColors, &cb, NULL) &&
-                      WriteFile(hFile, pBits, pbmih->biSizeImage, &cb, NULL);
+            /* write to file */
+            fOK = WriteFile(hFile, &bf, sizeof(bf), &cb, NULL) &&
+                  WriteFile(hFile, &bmi, sizeof(BITMAPINFOHEADER), &cb, NULL) &&
+                  WriteFile(hFile, bmi.bmiColors, cbColors, &cb, NULL) &&
+                  WriteFile(hFile, pBits, pbmih->biSizeImage, &cb, NULL);
 
-                /* close the file */
-                CloseHandle(hFile);
+            /* close the file */
+            CloseHandle(hFile);
 
-                /* if writing failed, delete the file */
-                if (!fOK)
-                {
-                    assert(0);
-                    DeleteFile(bmp_file);
-                }
-            }
-            else
+            /* if writing failed, delete the file */
+            if (!fOK)
             {
-                /* failed to create a file */
                 assert(0);
+                DeleteFile(bmp_file);
             }
         }
         else
         {
-            /* failed to get the bits */
+            /* failed to create a file */
             assert(0);
         }
-
-        /* delete the DC */
-        DeleteDC(hDC);
     }
     else
     {
-        /* failed to create a DC */
+        /* failed to get the bits */
         assert(0);
     }
+
+    /* delete the DC */
+    DeleteDC(hDC);
 
     /* clean up */
     HeapFree(GetProcessHeap(), 0, pBits);
