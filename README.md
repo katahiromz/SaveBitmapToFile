@@ -10,4 +10,6 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file);
 BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm);
 ```
 
+Don't forget to append the filename extension.
+
 License: MIT
