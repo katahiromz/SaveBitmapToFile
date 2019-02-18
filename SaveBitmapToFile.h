@@ -169,7 +169,7 @@ __inline BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
         return FALSE;   /* allocation failure */
     }
 
-    /* create the DC */
+    /* create a DC */
     fOK = FALSE;
     hDC = CreateCompatibleDC(NULL);
     if (hDC)
@@ -217,6 +217,7 @@ __inline BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
     }
     else
     {
+        /* failed to create a DC */
         assert(0);
     }
 
