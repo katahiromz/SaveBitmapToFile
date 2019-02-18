@@ -119,7 +119,7 @@ __inline HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
     return hbm;
 }
 
-__inline BOOL WINAPI SaveBitmapToFile(LPCWSTR bmp_file, HBITMAP hbm)
+__inline BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
 {
     BOOL fOK;
     BITMAPFILEHEADER bf;
@@ -179,9 +179,9 @@ __inline BOOL WINAPI SaveBitmapToFile(LPCWSTR bmp_file, HBITMAP hbm)
                       DIB_RGB_COLORS))
         {
             /* create the file */
-            hFile = CreateFileW(bmp_file, GENERIC_WRITE, FILE_SHARE_READ, NULL,
-                                CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL |
-                                FILE_FLAG_WRITE_THROUGH, NULL);
+            hFile = CreateFile(bmp_file, GENERIC_WRITE, FILE_SHARE_READ, NULL,
+                               CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL |
+                               FILE_FLAG_WRITE_THROUGH, NULL);
             if (hFile != INVALID_HANDLE_VALUE)
             {
                 /* write to file */
@@ -197,7 +197,7 @@ __inline BOOL WINAPI SaveBitmapToFile(LPCWSTR bmp_file, HBITMAP hbm)
                 if (!fOK)
                 {
                     assert(0);
-                    DeleteFileW(bmp_file);
+                    DeleteFile(bmp_file);
                 }
             }
             else

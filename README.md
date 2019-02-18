@@ -7,7 +7,7 @@
 ```c
 #include "SaveBitmapToFile.h"
 __inline HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file);
-__inline BOOL WINAPI SaveBitmapToFile(LPCWSTR bmp_file, HBITMAP hbm);
+__inline BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm);
 ```
 
 License: MIT
