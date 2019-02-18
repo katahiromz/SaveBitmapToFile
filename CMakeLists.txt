@@ -60,8 +60,10 @@ endif()
 ##############################################################################
 
 add_library(SaveBitmapToFile STATIC SaveBitmapToFile.c)
-
 install(TARGETS SaveBitmapToFile DESTINATION lib)
 install(FILES SaveBitmapToFile.h DESTINATION include)
+
+add_executable(SaveBitmapToFileTest SaveBitmapToFileTest.c)
+target_link_libraries(SaveBitmapToFileTest PRIVATE SaveBitmapToFile)
 
 ##############################################################################

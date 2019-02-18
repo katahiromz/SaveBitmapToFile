@@ -31,3 +31,4 @@ x64
 *-old
 *.skrold
 lib*.a
+*-saved.bmp
