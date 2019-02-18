@@ -57,7 +57,7 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
     {
         cbImage = bf.bfSize - bf.bfOffBits;
         pvBits1 = HeapAlloc(GetProcessHeap(), 0, cbImage);
-        if (pvBits1 != NULL)
+        if (pvBits1)
         {
             if (!ReadFile(hFile, &bmi, bf.bfOffBits -
                           sizeof(BITMAPFILEHEADER), &cb, NULL) ||
@@ -76,7 +76,6 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
 
     if (pvBits1 == NULL)
     {
-        assert(0);
         return NULL;    /* allocation failure */
     }
 
