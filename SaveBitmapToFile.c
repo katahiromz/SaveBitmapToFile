@@ -9,6 +9,10 @@
     #include <assert.h>
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define BM_MAGIC 0x4D42  /* 'BM' */
 
 typedef struct tagKHMZ_BITMAPINFOEX
@@ -204,3 +208,7 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
 
     return fOK;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
