@@ -1,3 +1,6 @@
+// SaveBitmapToFileTest.c --- Test for SaveBitmapToFile
+// Copyright (C) 2019 Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>.
+// This file is public domain software.
 #include "SaveBitmapToFile.h"
 
 #ifdef __cplusplus
@@ -16,17 +19,17 @@ int main(void)
         TEXT("24bpp.bmp"),
         TEXT("32bpp.bmp")
     };
-    static const LPCTSTR array2[] =
+    static const INT array2[] =
+    {
+        1, 4, 8, 24, 32
+    };
+    static const LPCTSTR array3[] =
     {
         TEXT("1bpp-saved.bmp"),
         TEXT("4bpp-saved.bmp"),
         TEXT("8bpp-saved.bmp"),
         TEXT("24bpp-saved.bmp"),
         TEXT("32bpp-saved.bmp")
-    };
-    static const INT array3[] =
-    {
-        1, 4, 8, 24, 32
     };
     HBITMAP hbm;
     BITMAP bm;
@@ -41,9 +44,9 @@ int main(void)
         if (!GetObject(hbm, sizeof(bm), &bm))
             assert(0);
 
-        assert(bm.bmBitsPixel == array3[i]);
+        assert(bm.bmBitsPixel == array2[i]);
 
-        if (!SaveBitmapToFile(array2[i], hbm))
+        if (!SaveBitmapToFile(array3[i], hbm))
             assert(0);
 
         if (!DeleteObject(hbm))
