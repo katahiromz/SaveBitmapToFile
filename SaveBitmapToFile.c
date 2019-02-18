@@ -9,6 +9,8 @@
     #include <assert.h>
 #endif
 
+#define BM_MAGIC 0x4D42  /* 'BM' */
+
 typedef struct tagKHMZ_BITMAPINFOEX
 {
     BITMAPINFOHEADER bmiHeader;
@@ -51,7 +53,7 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
 
     /* allocate the bits and read from file */
     pvBits1 = NULL;
-    if (bf.bfType == 0x4D42 && bf.bfReserved1 == 0 && bf.bfReserved2 == 0 &&
+    if (bf.bfType == BM_MAGIC && bf.bfReserved1 == 0 && bf.bfReserved2 == 0 &&
         bf.bfSize > bf.bfOffBits && bf.bfOffBits > sizeof(BITMAPFILEHEADER) &&
         bf.bfOffBits <= sizeof(BITMAPFILEHEADER) + sizeof(KHMZ_BITMAPINFOEX))
     {
@@ -138,7 +140,7 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
     else
         cbColors = 0;
 
-    bf.bfType = 0x4d42;
+    bf.bfType = BM_MAGIC;
     bf.bfReserved1 = 0;
     bf.bfReserved2 = 0;
     cb = sizeof(BITMAPFILEHEADER) + pbmih->biSize + cbColors;
@@ -169,8 +171,7 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
         {
             /* write to file */
             fOK = WriteFile(hFile, &bf, sizeof(bf), &cb, NULL) &&
-                  WriteFile(hFile, &bmi, sizeof(BITMAPINFOHEADER), &cb, NULL) &&
-                  WriteFile(hFile, bmi.bmiColors, cbColors, &cb, NULL) &&
+                  WriteFile(hFile, &bmi, sizeof(BITMAPINFOHEADER) + cbColors, &cb, NULL) &&
                   WriteFile(hFile, pBits, pbmih->biSizeImage, &cb, NULL);
 
             /* close the file */
