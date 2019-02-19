@@ -140,7 +140,7 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
 
     /* size of color table */
     if (bm.bmBitsPixel <= 8)
-        cbColors = (1 << (BYTE)bm.bmBitsPixel) * sizeof(RGBQUAD);
+        cbColors = (DWORD)((1ULL << bm.bmBitsPixel) * sizeof(RGBQUAD));
     else
         cbColors = 0;
 
