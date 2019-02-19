@@ -6,6 +6,9 @@
 # CMake minimum version
 cmake_minimum_required(VERSION 2.4)
 
+# enable testing
+enable_testing()
+
 # project name and language
 project(SaveBitmapToFile C)
 
@@ -59,24 +62,38 @@ endif()
 
 ##############################################################################
 
+# SaveBitmapToFileA
 add_library(SaveBitmapToFileA STATIC SaveBitmapToFile.c)
 target_compile_definitions(SaveBitmapToFileA PRIVATE -DMBCS -D_MBCS)
 
+# SaveBitmapToFileW
 add_library(SaveBitmapToFileW STATIC SaveBitmapToFile.c)
 target_compile_definitions(SaveBitmapToFileW PRIVATE -DUNICODE -D_UNICODE)
 
+# SaveBitmapToFile
 add_library(SaveBitmapToFile STATIC empty.c)
 target_link_libraries(SaveBitmapToFile PRIVATE SaveBitmapToFileA SaveBitmapToFileW)
 
+# installation
 install(TARGETS SaveBitmapToFile DESTINATION lib)
 install(FILES SaveBitmapToFile.h DESTINATION include)
 
+# SaveBitmapToFileTestA
 add_executable(SaveBitmapToFileTestA SaveBitmapToFileTest.c)
 target_link_libraries(SaveBitmapToFileTestA PRIVATE SaveBitmapToFile)
 target_link_libraries(SaveBitmapToFileTestA PRIVATE -DMBCS -D_MBCS)
 
+# SaveBitmapToFileTestW
 add_executable(SaveBitmapToFileTestW SaveBitmapToFileTest.c)
 target_link_libraries(SaveBitmapToFileTestW PRIVATE SaveBitmapToFile)
 target_link_libraries(SaveBitmapToFileTestW PRIVATE -DUNICODE -D_UNICODE)
+
+# tests
+add_test(NAME SaveBitmapToFileTestA
+         COMMAND $<TARGET_FILE:SaveBitmapToFileTestA>
+         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+add_test(NAME SaveBitmapToFileTestW
+         COMMAND $<TARGET_FILE:SaveBitmapToFileTestW>
+         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 
 ##############################################################################
