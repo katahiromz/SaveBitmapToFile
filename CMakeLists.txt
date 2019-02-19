@@ -59,11 +59,24 @@ endif()
 
 ##############################################################################
 
-add_library(SaveBitmapToFile STATIC SaveBitmapToFile.c)
+add_library(SaveBitmapToFileA STATIC SaveBitmapToFile.c)
+target_compile_definitions(SaveBitmapToFileA PRIVATE -DMBCS -D_MBCS)
+
+add_library(SaveBitmapToFileW STATIC SaveBitmapToFile.c)
+target_compile_definitions(SaveBitmapToFileW PRIVATE -DUNICODE -D_UNICODE)
+
+add_library(SaveBitmapToFile STATIC empty.c)
+target_link_libraries(SaveBitmapToFile PRIVATE SaveBitmapToFileA SaveBitmapToFileW)
+
 install(TARGETS SaveBitmapToFile DESTINATION lib)
 install(FILES SaveBitmapToFile.h DESTINATION include)
 
-add_executable(SaveBitmapToFileTest SaveBitmapToFileTest.c)
-target_link_libraries(SaveBitmapToFileTest PRIVATE SaveBitmapToFile)
+add_executable(SaveBitmapToFileTestA SaveBitmapToFileTest.c)
+target_link_libraries(SaveBitmapToFileTestA PRIVATE SaveBitmapToFile)
+target_link_libraries(SaveBitmapToFileTestA PRIVATE -DMBCS -D_MBCS)
+
+add_executable(SaveBitmapToFileTestW SaveBitmapToFileTest.c)
+target_link_libraries(SaveBitmapToFileTestW PRIVATE SaveBitmapToFile)
+target_link_libraries(SaveBitmapToFileTestW PRIVATE -DUNICODE -D_UNICODE)
 
 ##############################################################################

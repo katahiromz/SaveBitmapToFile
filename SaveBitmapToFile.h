@@ -24,10 +24,12 @@ extern "C" {
 #endif
 
 /* load a bitmap as DIB from a BMP/DIB file */
-HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file);
+HBITMAP WINAPI LoadBitmapFromFileA(LPCSTR bmp_file);
+HBITMAP WINAPI LoadBitmapFromFileW(LPCWSTR bmp_file);
 
 /* save the bitmap to a BMP/DIB file */
-BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm);
+BOOL WINAPI SaveBitmapToFileA(LPCSTR bmp_file, HBITMAP hbm);
+BOOL WINAPI SaveBitmapToFileW(LPCWSTR bmp_file, HBITMAP hbm);
 
 #ifdef __cplusplus
 } // extern "C"
