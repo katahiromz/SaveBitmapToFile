@@ -2,6 +2,7 @@
 // Copyright (C) 2019 Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>.
 // This file is public domain software.
 #include "SaveBitmapToFile.h"
+#include <stdio.h>
 
 #ifdef __cplusplus
     #include <cassert>
@@ -57,5 +58,6 @@ int main(void)
             assert(0);
     }
 
+    puts("success");
     return 0;
 }
