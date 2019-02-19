@@ -1,11 +1,8 @@
 /* SaveBitmapToFile.h --- loading/saving a bitmap in Win32 C/C++ */
 /* Copyright (C) 2019 Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>. */
 /* This file is public domain software. */
-#ifndef SaveBitmapToFile
-
-#ifndef _WIN32
-    #error SaveBitmapToFile requires Win32 C/C++ compiler.
-#endif
+#ifndef SAVEBITMAPTOFILE_H_
+#define SAVEBITMAPTOFILE_H_ 10  /* Version 10 */
 
 #ifndef _INC_WINDOWS
     #include <windows.h>
@@ -35,4 +32,4 @@ BOOL WINAPI SaveBitmapToFileW(LPCWSTR bmp_file, HBITMAP hbm);
 } /* extern "C" */
 #endif
 
-#endif  /* ndef SaveBitmapToFile */
+#endif  /* ndef SAVEBITMAPTOFILE_H_ */
