@@ -1,6 +1,6 @@
-// SaveBitmapToFile.h --- loading/saving a bitmap in Win32 C/C++
-// Copyright (C) 2019 Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>.
-// This file is public domain software.
+/* SaveBitmapToFile.h --- loading/saving a bitmap in Win32 C/C++ */
+/* Copyright (C) 2019 Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>. */
+/* This file is public domain software. */
 #ifndef SaveBitmapToFile
 
 #ifndef _WIN32
@@ -32,7 +32,7 @@ BOOL WINAPI SaveBitmapToFileA(LPCSTR bmp_file, HBITMAP hbm);
 BOOL WINAPI SaveBitmapToFileW(LPCWSTR bmp_file, HBITMAP hbm);
 
 #ifdef __cplusplus
-} // extern "C"
+} /* extern "C" */
 #endif
 
 #endif  /* ndef SaveBitmapToFile */
