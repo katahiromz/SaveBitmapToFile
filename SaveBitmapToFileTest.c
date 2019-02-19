@@ -21,20 +21,18 @@ int main(void)
         TEXT("1bpp.bmp"),
         TEXT("4bpp.bmp"),
         TEXT("8bpp.bmp"),
-        TEXT("16bpp.bmp"),
         TEXT("24bpp.bmp"),
         TEXT("32bpp.bmp")
     };
     static const INT array2[] =
     {
-        1, 4, 8, 16, 24, 32
+        1, 4, 8, 24, 32
     };
     static const LPCTSTR array3[] =
     {
         TEXT("1bpp-saved.bmp"),
         TEXT("4bpp-saved.bmp"),
         TEXT("8bpp-saved.bmp"),
-        TEXT("16bpp-saved.bmp"),
         TEXT("24bpp-saved.bmp"),
         TEXT("32bpp-saved.bmp")
     };
