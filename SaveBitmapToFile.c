@@ -4,12 +4,6 @@
 #include "SaveBitmapToFile.h"
 
 #ifdef __cplusplus
-    #include <cassert>
-#else
-    #include <assert.h>
-#endif
-
-#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -43,14 +37,12 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
     if (hFile == INVALID_HANDLE_VALUE)
     {
         /* failed to open the file */
-        assert(0);
         return NULL;
     }
 
     if (!ReadFile(hFile, &bf, sizeof(BITMAPFILEHEADER), &cb, NULL))
     {
         /* failed to read the file */
-        assert(0);
         CloseHandle(NULL);
         return NULL;
     }
@@ -70,7 +62,6 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
                 !ReadFile(hFile, pvBits1, cbImage, &cb, NULL))
             {
                 /* failed to read the file */
-                assert(0);
                 HeapFree(GetProcessHeap(), 0, pvBits1);
                 pvBits1 = NULL;
             }
@@ -95,7 +86,6 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
                        pvBits1, (BITMAPINFO*)&bmi, DIB_RGB_COLORS))
         {
             /* failed to get the bits */
-            assert(0);
             DeleteObject(hbm);
             hbm = NULL;
         }
@@ -124,7 +114,6 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
     /* verify the bitmap */
     if (!GetObject(hbm, sizeof(BITMAP), &bm))
     {
-        assert(0);
         return FALSE;
     }
 
@@ -155,7 +144,6 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
     pBits = HeapAlloc(GetProcessHeap(), 0, pbmih->biSizeImage);
     if (pBits == NULL)
     {
-        assert(0);
         return FALSE;   /* allocation failure */
     }
 
@@ -184,20 +172,9 @@ BOOL WINAPI SaveBitmapToFile(LPCTSTR bmp_file, HBITMAP hbm)
             /* if writing failed, delete the file */
             if (!fOK)
             {
-                assert(0);
                 DeleteFile(bmp_file);
             }
         }
-        else
-        {
-            /* failed to create a file */
-            assert(0);
-        }
-    }
-    else
-    {
-        /* failed to get the bits */
-        assert(0);
     }
 
     /* delete the DC */
