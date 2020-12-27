@@ -62,26 +62,17 @@ endif()
 
 ##############################################################################
 
-# SaveBitmapToFileA
-add_library(SaveBitmapToFileA STATIC SaveBitmapToFile.c)
-set_target_properties(SaveBitmapToFileA PROPERTIES COMPILE_FLAGS "-DMBCS -D_MBCS")
-
 # SaveBitmapToFileW
 add_library(SaveBitmapToFileW STATIC SaveBitmapToFile.c)
 set_target_properties(SaveBitmapToFileW PROPERTIES COMPILE_FLAGS "-DUNICODE -D_UNICODE")
 
 # SaveBitmapToFile
 add_library(SaveBitmapToFile STATIC empty.c)
-target_link_libraries(SaveBitmapToFile PRIVATE SaveBitmapToFileA SaveBitmapToFileW)
+target_link_libraries(SaveBitmapToFile PRIVATE SaveBitmapToFileW)
 
 # installation
 install(TARGETS SaveBitmapToFile DESTINATION lib)
 install(FILES SaveBitmapToFile.h DESTINATION include)
-
-# SaveBitmapToFileTestA
-add_executable(SaveBitmapToFileTestA SaveBitmapToFileTest.c)
-target_link_libraries(SaveBitmapToFileTestA PRIVATE SaveBitmapToFile)
-set_target_properties(SaveBitmapToFileTestA PROPERTIES COMPILE_FLAGS "-DMBCS -D_MBCS")
 
 # SaveBitmapToFileTestW
 add_executable(SaveBitmapToFileTestW SaveBitmapToFileTest.c)
@@ -89,9 +80,6 @@ target_link_libraries(SaveBitmapToFileTestW PRIVATE SaveBitmapToFile)
 set_target_properties(SaveBitmapToFileTestW PROPERTIES COMPILE_FLAGS "-DUNICODE -D_UNICODE")
 
 # tests
-add_test(NAME SaveBitmapToFileTestA
-         COMMAND $<TARGET_FILE:SaveBitmapToFileTestA>
-         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 add_test(NAME SaveBitmapToFileTestW
          COMMAND $<TARGET_FILE:SaveBitmapToFileTestW>
          WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
