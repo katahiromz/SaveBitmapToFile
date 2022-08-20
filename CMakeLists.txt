@@ -62,6 +62,10 @@ endif()
 
 ##############################################################################
 
+option(BITMAP_TEST "Build bitmap test and do it" OFF)
+
+##############################################################################
+
 # SaveBitmapToFileW
 add_library(SaveBitmapToFileW STATIC SaveBitmapToFile.c)
 set_target_properties(SaveBitmapToFileW PROPERTIES COMPILE_FLAGS "-DUNICODE -D_UNICODE")
@@ -74,14 +78,16 @@ target_link_libraries(SaveBitmapToFile PRIVATE SaveBitmapToFileW)
 install(TARGETS SaveBitmapToFile DESTINATION lib)
 install(FILES SaveBitmapToFile.h DESTINATION include)
 
-# SaveBitmapToFileTestW
-add_executable(SaveBitmapToFileTestW SaveBitmapToFileTest.c)
-target_link_libraries(SaveBitmapToFileTestW PRIVATE SaveBitmapToFile)
-set_target_properties(SaveBitmapToFileTestW PROPERTIES COMPILE_FLAGS "-DUNICODE -D_UNICODE")
-
 # tests
-add_test(NAME SaveBitmapToFileTestW
-         COMMAND $<TARGET_FILE:SaveBitmapToFileTestW>
-         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+if (BITMAP_TEST)
+    # SaveBitmapToFileTestW
+    add_executable(SaveBitmapToFileTestW SaveBitmapToFileTest.c)
+    target_link_libraries(SaveBitmapToFileTestW PRIVATE SaveBitmapToFile)
+    set_target_properties(SaveBitmapToFileTestW PROPERTIES COMPILE_FLAGS "-DUNICODE -D_UNICODE")
+
+    add_test(NAME SaveBitmapToFileTestW
+             COMMAND $<TARGET_FILE:SaveBitmapToFileTestW>
+             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+endif(BITMAP_TEST)
 
 ##############################################################################
