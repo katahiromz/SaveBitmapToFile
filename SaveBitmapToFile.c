@@ -43,7 +43,7 @@ HBITMAP WINAPI LoadBitmapFromFile(LPCTSTR bmp_file)
     if (!ReadFile(hFile, &bf, sizeof(BITMAPFILEHEADER), &cb, NULL))
     {
         /* failed to read the file */
-        CloseHandle(NULL);
+        CloseHandle(hFile);
         return NULL;
     }
 
